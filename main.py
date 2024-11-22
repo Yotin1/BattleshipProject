@@ -106,7 +106,7 @@ def take_turn():
             ships_sunk[hit_ship] = True
             print("Hit!")
             input(f"You sunk the {ships[hit_ship].name}!")
-            if all(ships_sunk):
+            if all(ships_sunk.values()):
                 return True
         else:
             input("Hit!")
