@@ -1,6 +1,7 @@
 # imported methods to clear the terminal
 from os import system, name
 import random as r
+import json
 import ship as s
 
 # function to clear the terminal
@@ -24,6 +25,7 @@ def print_grid(show_ships = False):
         else:
             print(f"|\n {y + 1} ", end = '')
         for x in grid[y]:
+            # shows position of ships if show_ships is true
             if x == 0 or show_ships is False:
                 print(f"| · ", end = '')
             elif x in ("X", "O"):
@@ -53,7 +55,7 @@ def add_ship(ship):
 def start_screen():
     clear()
     print("-Battleships-")
-    input("Press Enter to Start")
+    return input("Press enter to start or type \"q\" to quit: ")
 
 # initialises the game
 def initialise_game():
@@ -74,7 +76,7 @@ def initialise_game():
         # "C": s.ship("C", 5, "Carrier"),
         # "B": s.ship("B", 4, "Battleship"),
         # "R": s.ship("R", 3, "Cruiser"),
-        "S": s.ship("S", 3, "Submarine"),
+        # "S": s.ship("S", 3, "Submarine"),
         "D": s.ship("D", 2, "Destroyer")
     }
     # dictionary of all the ships that have sunk
@@ -114,19 +116,40 @@ def take_turn():
         grid[player_coords[1]][player_coords[0]] = "O"
         input("Miss!")
 
-start_screen()
-initialise_game()
-game_over = False
-turn = 1
-# game ends when all ships have sunk
-while game_over is not True:
-    game_over = take_turn()
-    turn += 1
-    if turn > 100:
-        break
-print_grid(True)
-print("You Win!")
-print(f"Turns Taken: {turn - 1}")
+def save_score():
+    name = input("Enter a name to save your score or press enter to continue: ")
+    if name is not None:
+        with open("scores.json", "r") as file:
+            try:
+                scores = json.load(file)
+                input(scores)
+                scores[name] = 5 - 1
+                input(scores)
+                with open("scores.json", "w") as file:
+                    json.dump(scores, file)
+            except:
+                print("Error saving score")
+
+        
+        # scores.dump(scores)
+save_score()
+# while True:
+#     if start_screen().upper() == "Q":
+#         break
+#     initialise_game()
+#     game_over = False
+#     turn = 1
+#     # game ends when all ships have sunk
+#     while game_over is not True:
+#         game_over = take_turn()
+#         turn += 1
+#         if turn > 100:
+#             break
+#     print_grid(True)
+#     print("You Win!")
+#     print(f"Turns Taken: {turn - 1}")
+#     save_score()
+    
 
 
 
