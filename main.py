@@ -132,23 +132,23 @@ def save_score():
 
         
         # scores.dump(scores)
-save_score()
-# while True:
-#     if start_screen().upper() == "Q":
-#         break
-#     initialise_game()
-#     game_over = False
-#     turn = 1
-#     # game ends when all ships have sunk
-#     while game_over is not True:
-#         game_over = take_turn()
-#         turn += 1
-#         if turn > 100:
-#             break
-#     print_grid(True)
-#     print("You Win!")
-#     print(f"Turns Taken: {turn - 1}")
-#     save_score()
+
+while True:
+    if start_screen().upper() == "Q":
+        break
+    initialise_game()
+    game_over = False
+    turn = 1
+    # game ends when all ships have sunk
+    while game_over is not True:
+        game_over = take_turn()
+        turn += 1
+        if turn > 100:
+            break
+    print_grid(True)
+    print("You Win!")
+    print(f"Turns Taken: {turn - 1}")
+    # save_score()
     
 
 
