@@ -2,6 +2,7 @@
 from os import system, name
 import random as r
 import json
+import re
 import ship as s
 
 # function to clear the terminal
@@ -98,7 +99,10 @@ def take_turn():
     print_grid(True)
     print(f"Turn {turn}")
     player_input = input("Enter Co-ordinates: ")
-    player_coords = [ord(player_input[0].upper()) - ord("A"), int(player_input[1:]) - 1]
+    message, player_coords = input_check(player_input)
+    while message != "":
+        player_input = input(message)
+        message, player_coords = input_check(player_input)
     # checks if a player hits or skinks a ship
     if grid[player_coords[1]][player_coords[0]] != 0:
         hit_ship, hit_section = grid[player_coords[1]][player_coords[0]]
@@ -115,6 +119,18 @@ def take_turn():
     else:
         grid[player_coords[1]][player_coords[0]] = "O"
         input("Miss!")
+
+# checks if the player input is valid
+def input_check(player_input):
+    if re.fullmatch(r"[a-zA-Z]\d+", player_input) is None:
+        return "Invalid Input, please try again: ", []
+    co_ords = [ord(player_input[0].upper()) - ord("A"), int(player_input[1:]) - 1]
+    if int(co_ords[1]) > 9 or int(co_ords[1]) < 0 or int(co_ords[0]) > 9:
+        return "Co-ordinates out of bounds, please try again: ", []
+    elif grid[co_ords[1]][co_ords[0]] in ("X", "O"):
+        return "You've already used those co-ordinates, please try again: ", []
+    else:
+        return "", co_ords
 
 def save_score():
     name = input("Enter a name to save your score or press enter to continue: ")
@@ -150,8 +166,3 @@ while True:
     print(f"Turns Taken: {turn - 1}")
     # save_score()
     
-
-
-
-# print_grid(True)
-
