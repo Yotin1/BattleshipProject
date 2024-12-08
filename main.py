@@ -162,8 +162,10 @@ while True:
         turn += 1
         if turn > 100:
             break
+    clear()
     print_grid(True)
     print("You Win!")
     print(f"Turns Taken: {turn - 1}")
+    input()
     # save_score()
     
