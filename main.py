@@ -96,6 +96,7 @@ def initialise_game():
 
 # runs when a player needs to take a turn
 def take_turn():
+    clear()
     print_grid(True)
     print(f"Turn {turn}")
     player_input = input("Enter Co-ordinates: ")
